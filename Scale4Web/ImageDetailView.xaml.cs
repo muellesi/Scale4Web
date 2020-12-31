@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace Scale4Web
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaktionslogik für ImageDetailView.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class ImageDetailView : UserControl
     {
-        public MainWindow()
+        public ImageDetailView()
         {
             InitializeComponent();
         }

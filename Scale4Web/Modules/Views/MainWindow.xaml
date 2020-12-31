@@ -1,12 +1,17 @@
-﻿<Window x:Class="Scale4Web.MainWindow"
+﻿<Window x:Class="Scale4Web.Modules.Views.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Scale4Web"
+        xmlns:viewmodels="clr-namespace:Scale4Web.Modules.ViewModels"
+
         mc:Ignorable="d"
+        d:DataContext="{d:DesignInstance Type=viewmodels:MainWindowViewModel}"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-
+        <Grid>
+            <ContentControl x:Name="MainContent" Content="{Binding CurrentModule, Mode=OneWay}" />
+        </Grid>
     </Grid>
 </Window>

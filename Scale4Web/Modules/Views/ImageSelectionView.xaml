@@ -1,0 +1,76 @@
+﻿<UserControl x:Class="Scale4Web.Modules.Views.ImageSelectionView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Scale4Web.Modules.Views"
+             xmlns:i18n="clr-namespace:Scale4Web.i18n"  
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition Height="150" />
+            </Grid.RowDefinitions>
+
+            <ListView
+            Grid.Row="1"
+            AllowDrop="True"
+            ItemsSource="{Binding Images}" 
+            DragEnter="ListBox_DragEnter" 
+            SelectedItem="{Binding SelectedImage, Mode=TwoWay}"
+            Drop="ListBox_Drop">
+                <ListView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Horizontal" Grid.IsSharedSizeScope="True" CanHorizontallyScroll="False"/>
+                    </ItemsPanelTemplate>
+                </ListView.ItemsPanel>
+
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" SharedSizeGroup="imageThumbnails"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Image 
+                            Grid.Column="0"
+                            x:Name="imagePreview"
+                            MaxHeight="100"
+                            HorizontalAlignment="Stretch"
+                            Source="{Binding ImageUri, Mode=OneWay}" />
+                        </Grid>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Grid Grid.Column="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+
+                    <GroupBox Grid.Column="0"
+                          Margin="10"
+                          Header="{x:Static i18n:Strings.FileMetaInformation}" />
+                    <Image Grid.Column="1" 
+                       Margin="10"
+                       Source="{Binding SelectedImage.ImageUri, Mode=OneWay}" />
+                </Grid>
+
+                <GroupBox Grid.Column="1" Header="{x:Static i18n:Strings.ExportOptions}" >
+                    <Grid>
+                        <ListBox ItemsSource="{Binding ConversionSettings.Presets, Mode=OneWay}" />
+                    </Grid>
+                </GroupBox>
+            </Grid>
+        </Grid>
+    </Grid>
+</UserControl>
