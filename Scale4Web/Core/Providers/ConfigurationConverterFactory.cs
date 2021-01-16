@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Scale4Web.Core.ConversionSettings.Legacy;
 using Unity;
 
 namespace Scale4Web.Core.Providers

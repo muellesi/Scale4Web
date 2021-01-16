@@ -1,17 +1,13 @@
-﻿using Scale4Web.Core.ConversionSettings;
+﻿using System.Threading.Tasks;
 using Scale4Web.Util;
-using System;
-using System.Reflection;
-using System.Threading.Tasks;
-using System.Windows;
 
-namespace Scale4Web.Core
+namespace Scale4Web.Core.ConversionSettings.Legacy
 {
     public class LegacyConfigurationConverter : IConfigurationConverter
     {
-        public Task<ConversionSettings.ConversionSettings> Convert(object otherFormat)
+        public Task<Core.ConversionSettings.ConversionSettings> Convert(object otherFormat)
         {
-            var converted = new ConversionSettings.ConversionSettings();
+            var converted = new Core.ConversionSettings.ConversionSettings();
 
             if (otherFormat is LegacyConfig input)
             {
@@ -54,6 +50,7 @@ namespace Scale4Web.Core
 
 
                     converted.AppVersion = GetType().Assembly.GetName().Version;
+                    converted.DefaultPreset = input.standardId.ToGuid();
                     converted.Presets.Add(convertedPreset);
                 }
             }

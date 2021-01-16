@@ -1,19 +1,15 @@
 ﻿using System;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.IO;
 using System.Text.Json;
-using System.Text.Json.Serialization;
-using Serilog;
-using Scale4Web.Core.ConversionSettings;
+using System.Threading.Tasks;
 using Scale4Web.Core.Providers;
+using Serilog;
 
-namespace Scale4Web.Core
+namespace Scale4Web.Core.ConversionSettings.Legacy
 {
 
 
-    public class LegacyConfigurationReader : IConfigurationReader
+    public class LegacyConfigurationReader : ISpecificConfigurationReader
     {
         private const string CONFIG_FILE_NAME = "settings.json";
 
@@ -26,28 +22,31 @@ namespace Scale4Web.Core
             _logger = logger;
         }
 
-        Version IConfigurationReader.Version => new(0, 0);
-
-        public IConversionSettings Settings { get; private set; }
+        Version ISpecificConfigurationReader.Version => new(0, 0);
 
         public string ConfigFileName => CONFIG_FILE_NAME;
 
-        async Task<bool> IConfigurationReader.TryReadConfig()
+        async Task<Core.ConversionSettings.ConversionSettings> IConfigurationReader.TryReadConfig()
         {
             try
             {
-                using var fileStream = File.OpenRead(ConfigFileName);
+                await using var fileStream = File.OpenRead(ConfigFileName);
                 var legacyConfig = await JsonSerializer.DeserializeAsync<LegacyConfig>(fileStream);
 
-                Settings = await _configConverter.Convert(legacyConfig);
-
-                return true;
+                return await _configConverter.Convert(legacyConfig).ConfigureAwait(false); 
             }
             catch(Exception ex)
             {
                 _logger.Error(ex, "Could not parse legacy configuration file {@configFile}", ConfigFileName);
-                return false;
+                return null;
             }
+        }
+
+        bool ISpecificConfigurationReader.CanRead()
+        {
+            var configFileExists = File.Exists(ConfigFileName);
+           
+            return configFileExists;
         }
     }
 }

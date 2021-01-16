@@ -4,9 +4,10 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Scale4Web.Modules.Views"
-             xmlns:i18n="clr-namespace:Scale4Web.i18n"  
+             xmlns:i18n="clr-namespace:Scale4Web.i18n"
+             xmlns:viewModels="clr-namespace:Scale4Web.Modules.ViewModels"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="450" d:DesignWidth="800" d:DataContext="{d:DesignInstance viewModels:ImageViewModel }">
     <Grid>
         <Grid>
             <Grid.RowDefinitions>
@@ -47,14 +48,14 @@
 
             <Grid Grid.Row="0">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="3*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
                 <Grid Grid.Column="0">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition />
-                        <ColumnDefinition />
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="2*"/>
                     </Grid.ColumnDefinitions>
 
                     <GroupBox Grid.Column="0"
@@ -67,7 +68,26 @@
 
                 <GroupBox Grid.Column="1" Header="{x:Static i18n:Strings.ExportOptions}" >
                     <Grid>
-                        <ListBox ItemsSource="{Binding ConversionSettings.Presets, Mode=OneWay}" />
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition Width="48"/>
+                            </Grid.ColumnDefinitions>
+                            <ComboBox 
+                                ItemsSource="{Binding ConversionSettings.Presets, Mode=OneWay}"
+                                SelectedItem="{Binding SelectedConversionPreset, Mode=TwoWay}"
+                                VerticalAlignment="Top"/>
+
+                            <Button 
+                                Grid.Column="1"
+                                Command="{Binding OpenSettingsViewCommand, Mode=OneWay}"
+                                Content="..."/>
+                        </Grid>
+
                     </Grid>
                 </GroupBox>
             </Grid>

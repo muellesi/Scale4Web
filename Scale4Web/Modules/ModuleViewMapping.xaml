@@ -6,5 +6,9 @@
     <DataTemplate DataType="{x:Type vm:ImageViewModel}">
         <v:ImageSelectionView />
     </DataTemplate>
-    
+
+    <DataTemplate DataType="{x:Type vm:SettingsViewModel}">
+        <v:SettingsView />
+    </DataTemplate>
+
 </ResourceDictionary>

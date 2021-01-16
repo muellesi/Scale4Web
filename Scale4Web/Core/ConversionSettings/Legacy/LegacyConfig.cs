@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 
-namespace Scale4Web.Core
+// ReSharper disable InconsistentNaming
+
+namespace Scale4Web.Core.ConversionSettings.Legacy
 {
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "Structs for deserializing legacy config.")]
     internal record LegacyConfig
@@ -23,5 +25,7 @@ namespace Scale4Web.Core
         }
 
         public List<LegacyConfigItem> presets { get; set; }
+        public int standardId { get; set; }
+
     }
 }

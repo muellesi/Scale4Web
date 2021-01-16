@@ -5,12 +5,15 @@ namespace Scale4Web.Core.ConversionSettings
 {
     public interface IConfigurationReader
     {
-        Version Version { get; }
+        Task<ConversionSettings> TryReadConfig();
+    }
 
-        IConversionSettings Settings { get; }
-
+    public interface ISpecificConfigurationReader : IConfigurationReader
+    {
         string ConfigFileName { get; }
 
-        Task<bool> TryReadConfig();
+        Version Version { get; }
+
+        bool CanRead();
     }
 }

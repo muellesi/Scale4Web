@@ -19,30 +19,22 @@ namespace Scale4Web
     {
         const string LEGACY_CONFIG_FILENAME = "settings.json";
         const string CONFIG_FILENAME = "settings.json";
-        protected async override void OnStartup(StartupEventArgs e)
+
+        protected override async void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
             var test = Strings.Test;
 
             var container = new Bootstrap().BootstrapDI();
 
+            //configuration
+            var dynamicConfigReader = container.Resolve<DynamicConfigurationReader>();
+            var config = await dynamicConfigReader.TryReadConfig();
+            container.RegisterInstance(config);
+
             MainWindowViewModel mainVm = container.Resolve<MainWindowViewModel>();
-
-            var settingsReaders = container.Resolve<IEnumerable<IConfigurationReader>>().OrderBy(r => r.Version).ToList();
-            IConfigurationReader best = null;
-
-            foreach (var reader in settingsReaders)
-            {
-                if(await reader.TryReadConfig())
-                {
-                    best = reader;
-                    break;
-                }
-            }
-
-            mainVm.ConversionSettings = best?.Settings;
-
             var mainWindow = new MainWindow() { DataContext = mainVm };
+
             mainWindow.Show();
         }
     }

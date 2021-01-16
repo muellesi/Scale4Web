@@ -9,18 +9,7 @@ namespace Scale4Web.Modules.ViewModels
 {
     class MainWindowViewModel : ModuleViewModelBase
     {
-        private IConversionSettings _conversionSettings;
         private IModule _currentModule;
-
-        public IConversionSettings ConversionSettings
-        {
-            get { return _conversionSettings; }
-            set
-            {
-                _conversionSettings = value;
-                RaisePropertyChanged();
-            }
-        }
 
         public IModule CurrentModule
         {
